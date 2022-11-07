@@ -6,7 +6,7 @@ const router = Router()
 
 export default 
 {
-    traerCarrito: (req:Request, res:Response) => 
+    traerCarrito: async (req:Request, res:Response) => 
     {
         const {id} = req.body
         const carri = new carritoModel()
@@ -14,7 +14,7 @@ export default
         res.send(carritouser)
 
     },
-    crearCarrito: (req:Request, res:Response) =>
+    crearCarrito: async (req:Request, res:Response) =>
     {
         // const {items } = req.body
         // const carrito = new carritoModel()
@@ -22,11 +22,11 @@ export default
 
         
     },
-    eliminarCarrito: (req:Request, res:Response) =>
+    eliminarCarrito: async (req:Request, res:Response) =>
     {
         
     },
-    actualizarCarrito: (req:Request, res:Response) =>
+    actualizarCarrito: async (req:Request, res:Response) =>
     {
 
     }
