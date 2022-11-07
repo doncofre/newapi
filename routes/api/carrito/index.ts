@@ -1,8 +1,7 @@
 import {Router, Request, Response } from 'express'
+import carritoCtrl from '../../../controller/carrito'
 
 const router = Router()
-router.get('/', (req: Request, res: Response) =>
-{
-    res.send('get carrito')
-})
+router.get('/', carritoCtrl.traerCarrito)
+
 export default router
