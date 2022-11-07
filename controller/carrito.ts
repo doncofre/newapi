@@ -8,10 +8,10 @@ export default
 {
     traerCarrito: async (req:Request, res:Response) => 
     {
-        const {id} = req.body
-        const carri = new carritoModel()
-        const carritouser = carritoModel.findById(id)
-        res.send(carritouser)
+        // const id = req.params.id
+        // const carritouser = await carritoModel.findById(id)
+        // res.send(carritouser)
+        await res.send("asd")
 
     },
     crearCarrito: async (req:Request, res:Response) =>
@@ -20,15 +20,15 @@ export default
         // const carrito = new carritoModel()
         // let arrCarrito: carritoModel[] = carrito
 
-        
+        await res.send("asd")
     },
     eliminarCarrito: async (req:Request, res:Response) =>
     {
-        
+        await res.send("asd")
     },
     actualizarCarrito: async (req:Request, res:Response) =>
     {
-
+        await res.send("asd")
     }
 
 }

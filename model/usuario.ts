@@ -1,9 +1,11 @@
 import {model, Schema} from 'mongoose'
-const productoSchema = new Schema(
+const usuarioSchema = new Schema(
 {
-    marca: String,
     nombre: String,
-    codebar: String
+    apellido: String,
+    dni: String,
+    usuario: String,
+    contrasena: String
 })
 
-export default model('Productos', productoSchema)
+export default model('Users', usuarioSchema)

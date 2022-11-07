@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, query } from "express";
+import { ObjectId } from "mongoose";
 import usuarioModel from '../model/usuario'
 
 
@@ -6,26 +7,92 @@ const router = Router()
 
 export default 
 {
-    traerCarrito: async (req:Request, res:Response) => 
+    traerUsuario: async (req:Request, res:Response) => 
     {
-        res.send("traercarrito")
-
+        const id = req.params.id
+        if(!id)
+        {
+            await null
+            res.statusCode = 404
+            res.send("no se pudo crear")
+        }
+        else
+        {
+            const usuario = await usuarioModel.findById(id)
+            res.send(usuario)
+            console.log(usuario)
+            console.log(id)
+        }
+        
     },
-    crearCarrito: async (req:Request, res:Response) =>
+    crearUsuario: async (req:Request, res:Response) =>
     {
         // const {items } = req.body
         // const carrito = new carritoModel()
         // let arrCarrito: carritoModel[] = carrito
+        console.log(req.body)
+        if(req.body == "")
+        {
+            await null
+            res.statusCode = 404
+            res.send("no se pudo crear")
+            
+        }
+        else
+        {
+            const nuevousuario = new usuarioModel(
+                {
+                    nombre: req.body.nombre,
+                    apellido: req.body.apellido,
+                    dni: req.body.apellido,
+                    usuario: req.body.usuario,
+                    contrasena: req.body.contrasena
+                }
+            )
+            
+            await nuevousuario.save()
+            req.statusCode = 200
+            console.log(nuevousuario)
+            res.send("Usuario Creado")
+        }
+            
 
         
-    },
-    eliminarCarrito: async (req:Request, res:Response) =>
-    {
         
     },
-    actualizarCarrito: async (req:Request, res:Response) =>
+    eliminarUsuario: async (req:Request, res:Response) =>
     {
+        
+        const id = req.params.id
+        await usuarioModel.findByIdAndDelete(id)
+        res.send("Usuario eliminado")
 
+    },
+    actualizarUsuario: async (req:Request, res:Response) =>
+    {
+        console.log(req.body)
+        if(req.body == "")
+        {
+            await null
+            res.statusCode = 404
+            res.send("no se pudo crear")
+            
+        }
+        else
+        {
+            
+            await usuarioModel.findByIdAndUpdate(req.body.id, 
+                {
+                    nombre: req.body.nombre,
+                    apellido: req.body.apellido,
+                    dni: req.body.apellido,
+                    usuario: req.body.usuario,
+                    contrasena: req.body.contrasena
+                })
+            
+            req.statusCode = 200
+            console.log("Se actualizo")
+        }
     }
 
 }

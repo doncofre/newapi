@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import item from "../model/item";
 import itemModel from '../model/item'
 
 
@@ -6,44 +7,70 @@ const router = Router()
 
 export default 
 {
-    traerCarrito: async (req:Request, res:Response) => 
+    traerItems: async (req:Request, res:Response) => 
     {
-        const productoss = new itemModel()
-        const todoslosproductos = await itemModel.find({})
-        res.send(todoslosproductos)
-    },
-    crearCarrito: async (req:Request, res:Response) =>
-    {
-        // const {items } = req.body
-        // const carrito = new carritoModel()
-        // let arrCarrito: carritoModel[] = carrito
-
+        
+            const items = await itemModel.find({})
+            res.send(items)
         
     },
-    eliminarCarrito: async (req:Request, res:Response) =>
+    crearItem: async (req:Request, res:Response) =>
     {
-        const {id} = req.body
-        const query = {_id: id}
-        await itemModel.findOneAndDelete(query)
-        
-        res.statusCode = 200
-        res.send("eliminado")
-
-    },
-    actualizarCarrito: async (req:Request, res:Response) =>
-    {
-        const {id,marca,nombre,codebar} = req.body
-        const query = {_id: id}
-        const nuevosvalores = 
+        console.log(req.body)
+        if(req.body == "")
         {
-            $set:
-            {
-                marca: marca,
-                nombre:nombre,
-                codebar:codebar
-            }
+            await null
+            res.statusCode = 404
+            res.send("no se pudo crear")
+            
         }
-        itemModel.updateOne(query,nuevosvalores)
+        else
+        {
+            const nuevoprod = new itemModel(
+                {
+                    marca: req.body.marca,
+                    nombre: req.body.nombre,
+                    codebar: req.body.codebar
+                }
+            )
+            
+            await nuevoprod.save()
+            req.statusCode = 200
+            console.log(nuevoprod)
+            res.send("Producto Creado")
+        }
+        
+    },
+    eliminarItem: async (req:Request, res:Response) =>
+    {
+        const id = req.params.id
+        await itemModel.findByIdAndDelete(id)
+        res.send("producto eliminado")
+    },
+    actualizarItem: async (req:Request, res:Response) =>
+    {
+        console.log(req.body)
+        if(req.body == "")
+        {
+            await null
+            res.statusCode = 404
+            res.send("no se pudo crear")
+            
+        }
+        else
+        {
+            
+            await itemModel.findByIdAndUpdate(req.body.id, 
+                {
+                    marca: req.body.marca,
+                    nombre: req.body.nombre,
+                    codebar: req.body.codebar
+                })
+            
+            req.statusCode = 200
+            console.log("Se actualizo")
+        }
+    
     }
 
 }

@@ -14,28 +14,24 @@ app.use(express.json({limit: "10mb"}))
 app.use(express.urlencoded({ extended: true }))
 app.use('/api', apiRouter)
 
-// app.get('/', (req,res) =>
-// {
-//     res.send('get')
-// })
 
 app.listen(4000, () =>
     {
-        console.log('conectado');
+        console.log('conectado al puerto 4000');
         
     })
 
 conectarDB()
     .then(()=> 
     {
-        console.log('conectado')
+        console.log('conectado a mongodb')
     })
     .catch(()=>
     {
         console.log('no se pudo conectar')
     })
 
-async function conectarDB() 
+async function conectarDB()  
 {
     if(process.env.MONGOOSE_CONNECTION_STRING)
     {
