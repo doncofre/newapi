@@ -91,6 +91,7 @@ export default
                 })
             
             req.statusCode = 200
+            res.send("se actualizo")
             console.log("Se actualizo")
         }
     }

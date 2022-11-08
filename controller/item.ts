@@ -52,7 +52,7 @@ export default
         console.log(req.body)
         if(req.body == "")
         {
-            await null
+            
             res.statusCode = 404
             res.send("no se pudo crear")
             
@@ -69,6 +69,7 @@ export default
             
             req.statusCode = 200
             console.log("Se actualizo")
+            res.send("se actualizo")
         }
     
     }
