@@ -3,7 +3,8 @@ const productoSchema = new Schema(
 {
     marca: String,
     nombre: String,
-    codebar: String
+    codebar: String,
+    precio: Number
 })
 
 export default model('Productos', productoSchema)

@@ -7,6 +7,6 @@ const router = Router();
 
 router.use('/carrito',carritoRouter)
 router.use('/item', itemRouter)
-router.use('/usuario', usuarioRouter)
+router.use('/usuario', usuarioRouter) //localhost:mipuerto/api/usuario
 
 export default router;

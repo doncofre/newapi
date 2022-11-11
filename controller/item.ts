@@ -30,7 +30,8 @@ export default
                 {
                     marca: req.body.marca,
                     nombre: req.body.nombre,
-                    codebar: req.body.codebar
+                    codebar: req.body.codebar,
+                    precio: req.body.precio
                 }
             )
             
@@ -64,7 +65,8 @@ export default
                 {
                     marca: req.body.marca,
                     nombre: req.body.nombre,
-                    codebar: req.body.codebar
+                    codebar: req.body.codebar,
+                    precio: req.body.precio
                 })
             
             req.statusCode = 200

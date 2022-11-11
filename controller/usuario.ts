@@ -9,10 +9,9 @@ export default
 {
     traerUsuario: async (req:Request, res:Response) => 
     {
-        const id = req.params.id
-        if(!id)
+        const id = req.params.id //12312451245
+        if(!id) //!= null != ""
         {
-            await null
             res.statusCode = 404
             res.send("no se pudo crear")
         }
@@ -73,19 +72,17 @@ export default
         console.log(req.body)
         if(req.body == "")
         {
-            await null
             res.statusCode = 404
             res.send("no se pudo crear")
             
         }
         else
         {
-            
             await usuarioModel.findByIdAndUpdate(req.body.id, 
                 {
                     nombre: req.body.nombre,
                     apellido: req.body.apellido,
-                    dni: req.body.apellido,
+                    dni: req.body.dni,
                     usuario: req.body.usuario,
                     contrasena: req.body.contrasena
                 })
