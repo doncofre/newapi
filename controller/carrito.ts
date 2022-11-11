@@ -1,6 +1,7 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, response } from "express";
 import carritoModel from '../model/carrito'
 import itemModel from '../model/item'
+import item from "./item";
 
 
 
@@ -12,14 +13,18 @@ export default
     {
         const id = req.params.id
         const carritousuario = carritoModel.findById(id)
-        //carritousuario.productos.array.forEach(element => {
+        let arrcarrito: string[]
+        let total: Number = 0
+        carritousuario.productos.array.forEach(element => {
             
-       // });
-        const asd = {
-            item1: "leche x3",
-            item2: "aceite x1",
-            total: 5000
-        }
+            const itemm = itemModel.findById(element)
+            arrcarrito.push(item.nombre)
+            total = total + item.precio
+        });
+        res.send({
+            productos: arrcarrito,
+            total = total
+        })
 
 
     },
@@ -76,7 +81,18 @@ export default
             }
             else 
             {
-    
+                try
+                {
+                    productos.array.forEach(element => {
+                        carry.productos.findIndex(element)
+                        carry.productos.splice(element-1, 1)
+
+                    });
+                }
+                catch
+                {
+                    console.log('error en el carrito')
+                }
             }
         }
         else
