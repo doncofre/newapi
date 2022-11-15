@@ -29,9 +29,11 @@ export default
                 const producto = await itemModel.findById(idproduc)
                 const nombreproducto = producto?.nombre
                 const precioproducto = producto?.precio
+                const marcaproducto = producto?.marca
+                const codebarproducto = producto?.codebar
                 if (nombreproducto && precioproducto)
                 {
-                    arr.push(nombreproducto)
+                    arr.push("MARCA: " + marcaproducto + "  MODELO: " + nombreproducto + "  PLU: " +codebarproducto + "  PRECIO: "+precioproducto.toString())
                     total = total + precioproducto
                 }
                 
@@ -105,42 +107,42 @@ export default
 
             if(req.body.addBool == true && req.body.productos.length>0)
             {
-                let arr: string[] = [] 
-                carry.productos.forEach(element => {
-                arr.push(element)
+                // let arr: string[] = [] 
+                // carry.productos.forEach(element => {
+                // arr.push(element)
 
-                productos?.forEach(element => {
-                    arr.push(element)
-                });
+                // productos?.forEach(element => {
+                //     arr.push(element)
+                // });
 
-                carritoModel.findByIdAndUpdate(req.body.id ,{
-                    iduser: carry?.iduser,
-                    productos: arr
+                // carritoModel.findByIdAndUpdate(req.body.id ,{
+                //     iduser: carry?.iduser,
+                //     productos: arr
 
-                })
-                carry.save()
-                res.status(200).send("Agregados con exito")
-                });
+                // })
+                // carry.save()
+                // res.status(200).send("Agregados con exito")
+                // });
             }
             else if(req.body.addBool == false && req.body.productos.length>0)
             {
-                let arr: string[] = [] 
-                carry.productos.forEach(element => {
-                arr.push(element)
+                // let arr: string[] = [] 
+                // carry.productos.forEach(element => {
+                // arr.push(element)
 
-                productos?.forEach(element => {
-                    const indeof= arr.indexOf(element)
-                    arr.splice(indeof,1)
-                });
+                // productos?.forEach(element => {
+                //     const indeof= arr.indexOf(element)
+                //     arr.splice(indeof,1)
+                // });
 
-                carritoModel.findByIdAndUpdate(req.body.id ,{
-                    iduser: carry?.iduser,
-                    productos: arr
+                // carritoModel.findByIdAndUpdate(req.body.id ,{
+                //     iduser: carry?.iduser,
+                //     productos: arr
 
-                })
-                carry.save()
-                res.status(200).send("quitados con exito")
-                });
+                // })
+                // carry.save()
+                // res.status(200).send("quitados con exito")
+                // });
             }
         }
         else
