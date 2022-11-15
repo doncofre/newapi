@@ -1,4 +1,5 @@
 import { Router, Request, Response, response } from "express";
+import carrito from "../model/carrito";
 import carritoModel from '../model/carrito'
 import itemModel from '../model/item'
 import item from "./item";
@@ -11,20 +12,41 @@ export default
 {
     traerCarrito: async (req:Request, res:Response) => 
     {
+        var mongoose = require('mongoose');
         const id = req.params.id
-        const carritousuario = carritoModel.findById(id)
-        let arrcarrito: string[]
-        let total: Number = 0
-        carritousuario.productos.array.forEach(element => {
-            
-            const itemm = itemModel.findById(element)
-            arrcarrito.push(item.nombre)
-            total = total + item.precio
-        });
-        res.send({
-            productos: arrcarrito,
-            total = total
-        })
+        const carritousuario = await carritoModel.findById(id)
+        console.log(id)
+        console.log(carritousuario?._id)
+        //////////////////
+        let arr: string[] = []
+        let total: number = 0
+        ////////////////
+        if (id && carritousuario)
+        {
+            for (let index = 0; index < carritousuario.productos.length; index++) 
+            {
+                const idproduc = carritousuario.productos[index];
+                const producto = await itemModel.findById(idproduc)
+                const nombreproducto = producto?.nombre
+                const precioproducto = producto?.precio
+                if (nombreproducto && precioproducto)
+                {
+                    arr.push(nombreproducto)
+                    total = total + precioproducto
+                }
+                
+            }
+            //arr.sort()
+            res.statusCode = 200
+            res.send({arr,total})
+
+        }
+        else
+        {
+            res.send("la concha de tu madre")
+        }
+       
+
 
 
     },
@@ -65,34 +87,34 @@ export default
         {
             if(req.body.addBool == true)
             {
-                try
-                {
-                    productos.array.forEach(element => 
-                        {
-                            carry.productos.push(element)
-                        });
-                }
-                catch
-                {
-                    console.log('error en el carrito')
-                }
+                // try
+                // {
+                //     productos.array.forEach(element => 
+                //         {
+                //             carry.productos.push(element)
+                //         });
+                // }
+                // catch
+                // {
+                //     console.log('error en el carrito')
+                // }
                 
                 
             }
             else 
             {
-                try
-                {
-                    productos.array.forEach(element => {
-                        carry.productos.findIndex(element)
-                        carry.productos.splice(element-1, 1)
+                // try
+                // {
+                //     productos.array.forEach(element => {
+                //         carry.productos.findIndex(element)
+                //         carry.productos.splice(element-1, 1)
 
-                    });
-                }
-                catch
-                {
-                    console.log('error en el carrito')
-                }
+                //     });
+                // }
+                // catch
+                // {
+                //     console.log('error en el carrito')
+                // }
             }
         }
         else

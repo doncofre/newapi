@@ -4,7 +4,7 @@ const productoSchema = new Schema(
     marca: String,
     nombre: String,
     codebar: String,
-    precio: Number
+    precio: {type:Number,default:0}
 })
 
 export default model('Productos', productoSchema)
