@@ -5,8 +5,8 @@ import usuarioRouter from './usuario'
 
 const router = Router();
 
-router.use('/carrito',carritoRouter)
-router.use('/item', itemRouter)
-router.use('/usuario', usuarioRouter) //localhost:mipuerto/api/usuario
+router.use('/carrito',carritoRouter)        //localhost:mipuerto/api/carrito
+router.use('/item', itemRouter)             //localhost:mipuerto/api/item
+router.use('/usuario', usuarioRouter)       //localhost:mipuerto/api/usuario
 
 export default router;

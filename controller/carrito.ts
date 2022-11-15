@@ -92,51 +92,60 @@ export default
         await carritoModel.findByIdAndDelete(id)
         res.send("Carrito eliminado")
     },
+
     actualizarCarrito: async (req:Request, res:Response) =>
     {
-        //add bool V o F - Add or Sub items
-        //idcarrito
-        //arritems
+        var mongoose = require('mongoose')
         const productos = req.body.productos
-        const carry = await carritoModel.findById(req.body.iduser)
+        const carry = await carritoModel.findById(req.body.id)
         
         if(carry)
         {
-            if(req.body.addBool == true)
-            {
-                // try
-                // {
-                //     productos.array.forEach(element => 
-                //         {
-                //             carry.productos.push(element)
-                //         });
-                // }
-                // catch
-                // {
-                //     console.log('error en el carrito')
-                // }
-                
-                
-            }
-            else 
-            {
-                // try
-                // {
-                //     productos.array.forEach(element => {
-                //         carry.productos.findIndex(element)
-                //         carry.productos.splice(element-1, 1)
+            
 
-                //     });
-                // }
-                // catch
-                // {
-                //     console.log('error en el carrito')
-                // }
+            if(req.body.addBool == true && req.body.productos.length>0)
+            {
+                let arr: string[] = [] 
+                carry.productos.forEach(element => {
+                arr.push(element)
+
+                productos?.forEach(element => {
+                    arr.push(element)
+                });
+
+                carritoModel.findByIdAndUpdate(req.body.id ,{
+                    iduser: carry?.iduser,
+                    productos: arr
+
+                })
+                carry.save()
+                res.status(200).send("Agregados con exito")
+                });
+            }
+            else if(req.body.addBool == false && req.body.productos.length>0)
+            {
+                let arr: string[] = [] 
+                carry.productos.forEach(element => {
+                arr.push(element)
+
+                productos?.forEach(element => {
+                    const indeof= arr.indexOf(element)
+                    arr.splice(indeof,1)
+                });
+
+                carritoModel.findByIdAndUpdate(req.body.id ,{
+                    iduser: carry?.iduser,
+                    productos: arr
+
+                })
+                carry.save()
+                res.status(200).send("quitados con exito")
+                });
             }
         }
         else
         {
-            res.send('carrito no encontrado')
+            res.send('error en el carrito')
         }
         
     }
