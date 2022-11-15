@@ -97,22 +97,26 @@ export default
 
     actualizarCarrito: async (req:Request, res:Response) =>
     {
+        console.log("put")
+        //recibe id de carrito, array productos, booleano
         var mongoose = require('mongoose')
         const productos = req.body.productos
         const carry = await carritoModel.findById(req.body.id)
         
         if(carry)
         {
-            
+            console.log("if")
 
             if(req.body.addBool == true && req.body.productos.length>0)
             {
+                res.send("Productos sumados al carrito")
                 // let arr: string[] = [] 
-                // carry.productos.forEach(element => {
-                // arr.push(element)
-
+                // carry.productos?.forEach(element => {
+                //     if(element){arr.push(element.toString())}
+                    
                 // productos?.forEach(element => {
-                //     arr.push(element)
+                //     if(element){arr.push(element.toString())}
+                    
                 // });
 
                 // carritoModel.findByIdAndUpdate(req.body.id ,{
@@ -126,6 +130,7 @@ export default
             }
             else if(req.body.addBool == false && req.body.productos.length>0)
             {
+                res.send("Productos restados del carrito")
                 // let arr: string[] = [] 
                 // carry.productos.forEach(element => {
                 // arr.push(element)
@@ -144,6 +149,7 @@ export default
                 // res.status(200).send("quitados con exito")
                 // });
             }
+            res.send("No hay nada para editar")
         }
         else
         {
