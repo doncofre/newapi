@@ -3,7 +3,7 @@ import carritoCtrl from '../../../controller/carrito'
 
 const router = Router()
 router.get('/:id', carritoCtrl.traerCarrito)
-router.post('/', carritoCtrl.crearCarrito)
+router.post('/:id', carritoCtrl.crearCarrito)
 router.put('/', carritoCtrl.actualizarCarrito)
 router.delete('/:id', carritoCtrl.eliminarCarrito)
 export default router

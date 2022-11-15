@@ -16,7 +16,7 @@ export default
         const id = req.params.id
         const carritousuario = await carritoModel.findById(id)
         console.log(id)
-        console.log(carritousuario?._id)
+        console.log(carritousuario?.id)
         //////////////////
         let arr: string[] = []
         let total: number = 0
@@ -52,22 +52,39 @@ export default
     },
     crearCarrito: async (req:Request, res:Response) =>
     {
+        console.log("hola")
         var mongoose = require('mongoose')
-        const iduser = mongoose.Types.ObjectId(req.params.iduser)
-        const buscocarrito = await carritoModel.find({iduser: iduser})
-        if(buscocarrito.length !== 0)
+        const striduser = req.params.id
+        const iduser = mongoose.Types.ObjectId(striduser)
+        console.log(iduser)
+        
+        try
         {
-            res.status(400)
-            res.send("El carrito ya existe. ID" + buscocarrito[0].id )
+            console.log(striduser)
+            const buscocarrito = await carritoModel.find({iduser: striduser})
+            console.log(buscocarrito)
             
+            if(buscocarrito.length !== 0)
+            {
+                res.status(400)
+                res.send("El carrito ya existe. ID:" + buscocarrito[0].id )
+                
+            }
+            else
+            {
+                const nuevocarrito = new carritoModel()
+                nuevocarrito.iduser = iduser
+                nuevocarrito.productos = []
+                nuevocarrito.save()
+                res.status(200)
+                res.send("Carrito creado con exito"/*. ID:" + nuevocarrito.id*/)
+            }
         }
-        else
+        catch
         {
-            const nuevocarrito = new carritoModel()
-            nuevocarrito.iduser = iduser
-            res.status(200)
-            res.send("Carrito creado con exito. ID:" + nuevocarrito.id)
+            res.send("rompió flaco")
         }
+            
     },
     eliminarCarrito: async (req:Request, res:Response) =>
     {

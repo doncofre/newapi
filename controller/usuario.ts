@@ -43,7 +43,7 @@ export default
                 {
                     nombre: req.body.nombre,
                     apellido: req.body.apellido,
-                    dni: req.body.apellido,
+                    dni: req.body.dni,
                     usuario: req.body.usuario,
                     contrasena: req.body.contrasena
                 }
