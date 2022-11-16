@@ -100,7 +100,7 @@ export default
         console.log("put")
         //recibe id de carrito, array productos, booleano
         var mongoose = require('mongoose')
-        const productos = req.body.productos
+        const productos = await itemModel.find()
         const carry = await carritoModel.findById(req.body.id)
         
         if(carry)
@@ -109,7 +109,15 @@ export default
 
             if(req.body.addBool == true && req.body.productos.length>0)
             {
+                
+                for (let index = 0; index < req.body.productos.length; index++) {
+                    carry.productos.push(req.body.productos[index])
+                    
+                }
+                carry.save()
                 res.send("Productos sumados al carrito")
+                
+
                 // let arr: string[] = [] 
                 // carry.productos?.forEach(element => {
                 //     if(element){arr.push(element.toString())}
@@ -130,6 +138,20 @@ export default
             }
             else if(req.body.addBool == false && req.body.productos.length>0)
             {
+
+                for (let index = 0; index < req.body.productos.length; index++) {
+                    carry.productos.push(req.body.productos[index])
+                    const indexxof = carry.productos.indexOf(req.body.productos[index])
+                    if(indexxof)
+                    {
+                        carry.productos.splice(indexxof,1)
+                    }
+                    else
+                    {
+                        console.log("No existia este producto en el carrito:" + req.body.productos[index])
+                    }
+                }
+                carry.save()
                 res.send("Productos restados del carrito")
                 // let arr: string[] = [] 
                 // carry.productos.forEach(element => {

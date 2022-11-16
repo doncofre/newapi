@@ -13,12 +13,12 @@ export default
         if(!id) //!= null != ""
         {
             res.statusCode = 404
-            res.send("no se pudo crear")
+            res.send("no se pudo traer el usuario")
         }
         else
         {
             const usuario = await usuarioModel.findById(id)
-            res.send(usuario)
+            res.status(200).send(usuario)
             console.log(usuario)
             console.log(id)
         }

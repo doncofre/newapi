@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api', apiRouter)
 
 
-app.listen(4000, () =>
+app.listen(process.env.port, () =>
     {
         console.log('conectado al puerto 4000');
         
